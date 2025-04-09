@@ -1,0 +1,15 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/bin/Debug/net8.0/FactoryApp
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/bin/Debug/net8.0/FactoryApp.deps.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/bin/Debug/net8.0/FactoryApp.runtimeconfig.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/bin/Debug/net8.0/FactoryApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/bin/Debug/net8.0/FactoryApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.GeneratedMSBuildEditorConfig.editorconfig
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.AssemblyInfoInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.AssemblyInfo.cs
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.csproj.CoreCompileInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.sourcelink.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/refint/FactoryApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/FactoryApp.genruntimeconfig.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/Factory/FactoryApp/obj/Debug/net8.0/ref/FactoryApp.dll
