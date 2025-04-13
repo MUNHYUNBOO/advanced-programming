@@ -1,0 +1,1 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/Adapter_Rust/target/debug/Adapter_Rust: /bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/Adapter_Rust/src/main.rs
