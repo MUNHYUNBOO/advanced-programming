@@ -1,0 +1,15 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/bin/Debug/net8.0/FacadeApp
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/bin/Debug/net8.0/FacadeApp.deps.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/bin/Debug/net8.0/FacadeApp.runtimeconfig.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/bin/Debug/net8.0/FacadeApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/bin/Debug/net8.0/FacadeApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.GeneratedMSBuildEditorConfig.editorconfig
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.AssemblyInfoInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.AssemblyInfo.cs
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.csproj.CoreCompileInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.sourcelink.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/refint/FacadeApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/FacadeApp.genruntimeconfig.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Facade/FacadeApp/obj/Debug/net8.0/ref/FacadeApp.dll
