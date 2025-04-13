@@ -1,0 +1,99 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 환경 설정
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies (C++, zip)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential zip
+
+      # 프로젝트 빌드
+      - name: Build All Projects
+        run: |
+          mkdir -p build_outputs
+          for week in week*/; do
+            week_name=$(basename "$week")
+            for lang in "$week"*/; do
+              lang_name=$(basename "$lang")
+              case "$lang_name" in
+                cpp)
+                  cd "$lang"
+                  [ -f Makefile ] && make && cp your_cpp_executable "../../build_outputs/${week_name}_cpp"
+                  cd - > /dev/null
+                  ;;
+                rust)
+                  cd "$lang"
+                  [ -f Cargo.toml ] && cargo build --release && cp target/release/your_rust_executable "../../build_outputs/${week_name}_rust"
+                  cd - > /dev/null
+                  ;;
+                csharp)
+                  cd "$lang"
+                  csproj=$(ls *.csproj | head -n1)
+                  [ -n "$csproj" ] && dotnet publish -c Release -o publish_output && cp -r publish_output "../../build_outputs/${week_name}_csharp"
+                  cd - > /dev/null
+                  ;;
+                kotlin)
+                  cd "$lang"
+                  [ -f build.gradle.kts ] && ./gradlew clean build installDist && cp -r build/install "../../build_outputs/${week_name}_kotlin"
+                  cd - > /dev/null
+                  ;;
+                python)
+                  cd "$lang"
+                  if [ -f requirements.txt ]; then
+                    python -m venv venv
+                    source venv/bin/activate
+                    pip install -r requirements.txt
+                    deactivate
+                  fi
+                  cp -r . "../../build_outputs/${week_name}_python"
+                  cd - > /dev/null
+                  ;;
+              esac
+            done
+          done
+
+      # 결과물 압축
+      - name: Create ZIP Archive
+        run: |
+          cd build_outputs
+          zip -r ../release_artifacts.zip .
+
+      # GitHub 릴리즈 생성
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ github.run_number }}
+          name: Release ${{ github.run_number }}
+          files: release_artifacts.zip
