@@ -1,0 +1,15 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/bin/Debug/net8.0/Method_chainApp
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/bin/Debug/net8.0/Method_chainApp.deps.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/bin/Debug/net8.0/Method_chainApp.runtimeconfig.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/bin/Debug/net8.0/Method_chainApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/bin/Debug/net8.0/Method_chainApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.GeneratedMSBuildEditorConfig.editorconfig
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.AssemblyInfoInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.AssemblyInfo.cs
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.csproj.CoreCompileInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.sourcelink.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/refint/Method_chainApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/Method_chainApp.genruntimeconfig.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Method_chain/Method_chainApp/obj/Debug/net8.0/ref/Method_chainApp.dll
