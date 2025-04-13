@@ -45,37 +45,43 @@ jobs:
             pattern_name=$(basename "$pattern")
             echo "🔧 Building $pattern_name..."
 
-            # C++: *.cpp + Makefile
+            # 💻 C++ (main.cpp)
             if [ -f "${pattern_name}.cpp" ]; then
               echo "⚙️ Building C++ for $pattern_name"
-              g++ -o "${pattern_name}_cpp" "${pattern_name}.cpp"
+              g++ -o "${pattern_name}_cpp" "${pattern_name}.cpp" 2>/dev/null || echo "❌ C++ build failed"
               [ -f "${pattern_name}_cpp" ] && cp "${pattern_name}_cpp" ../../build_outputs/
             fi
 
-            # Rust: <Pattern>_Rust/Cargo.toml
+            # 🦀 Rust (<pattern>_Rust/Cargo.toml)
             if [ -d "${pattern_name}_Rust" ]; then
               echo "⚙️ Building Rust for $pattern_name"
               cd "${pattern_name}_Rust"
-              cargo build --release
+              cargo build --release || echo "❌ Rust build failed for $pattern_name"
               exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
-              [ -n "$exe" ] && cp "$exe" ../../build_outputs/"${pattern_name}_rust"
+              if [ -n "$exe" ]; then
+                cp "$exe" ../../build_outputs/"${pattern_name}_rust"
+              else
+                echo "❌ No Rust executable found for $pattern_name"
+              fi
               cd ..
             fi
 
-            # Kotlin: *.jar
+            # ☕ Kotlin (JAR 파일)
             if [ -f "${pattern_name}.jar" ]; then
               echo "📦 Copying Kotlin JAR for $pattern_name"
               cp "${pattern_name}.jar" ../../build_outputs/
             fi
 
-            # C#: <Pattern>App/*.csproj
+            # 🧩 C# (.csproj in <pattern_name>App/)
             if [ -d "${pattern_name}App" ]; then
               echo "⚙️ Building C# for $pattern_name"
-              dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output
-              cp -r publish_output "../../build_outputs/${pattern_name}_csharp"
+              dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output || echo "❌ C# build failed"
+              if [ -d publish_output ]; then
+                cp -r publish_output "../../build_outputs/${pattern_name}_csharp"
+              fi
             fi
 
-            # Python: *.py
+            # 🐍 Python (main.py)
             if [ -f "main.py" ]; then
               echo "🐍 Copying Python for $pattern_name"
               cp main.py ../../build_outputs/"${pattern_name}_python.py"
