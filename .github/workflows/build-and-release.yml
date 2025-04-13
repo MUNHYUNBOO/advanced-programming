@@ -58,7 +58,9 @@ jobs:
               cd "${pattern_name}_Rust"
               cargo build --release || echo "❌ Rust build failed for $pattern_name"
               exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
+              echo "Rust executable: $exe"
               if [ -n "$exe" ]; then
+                mkdir -p ../../build_outputs
                 cp "$exe" ../../build_outputs/"${pattern_name}_rust"
               else
                 echo "❌ No Rust executable found for $pattern_name"
@@ -77,6 +79,7 @@ jobs:
               echo "⚙️ Building C# for $pattern_name"
               dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output || echo "❌ C# build failed"
               if [ -d publish_output ]; then
+                mkdir -p ../../build_outputs
                 cp -r publish_output "../../build_outputs/${pattern_name}_csharp"
               fi
             fi
@@ -84,6 +87,7 @@ jobs:
             # 🐍 Python (main.py)
             if [ -f "main.py" ]; then
               echo "🐍 Copying Python for $pattern_name"
+              mkdir -p ../../build_outputs
               cp main.py ../../build_outputs/"${pattern_name}_python.py"
             fi
 
