@@ -32,48 +32,56 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Install build-essential
+      - name: Install build tools
         run: sudo apt-get update && sudo apt-get install -y build-essential zip
 
-      - name: Build All Projects
+      - name: Build All week6 Patterns
         run: |
           mkdir -p build_outputs
-          for week in week*/; do
-            week_name=$(basename "$week")
-            for lang in "$week"*/; do
-              lang_name=$(basename "$lang")
-              echo "🛠️ Processing $week_name/$lang_name..."
-              cd "$lang"
-              
-              case "$lang_name" in
-                cpp)
-                  [ -f Makefile ] && make
-                  exe=$(find . -maxdepth 1 -type f -executable | head -n1)
-                  [ -n "$exe" ] && cp "$exe" "../../../build_outputs/${week_name}_cpp"
-                  ;;
-                rust)
-                  [ -f Cargo.toml ] && cargo build --release
-                  exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
-                  [ -n "$exe" ] && cp "$exe" "../../../build_outputs/${week_name}_rust"
-                  ;;
-                csharp)
-                  csproj=$(find . -name "*.csproj" | head -n1)
-                  if [ -n "$csproj" ]; then
-                    dotnet publish "$csproj" -c Release -o publish_output
-                    cp -r publish_output "../../../build_outputs/${week_name}_csharp"
-                  fi
-                  ;;
-                kotlin)
-                  [ -f build.gradle.kts ] && ./gradlew installDist
-                  [ -d build/install ] && cp -r build/install "../../../build_outputs/${week_name}_kotlin"
-                  ;;
-                python)
-                  [ -f main.py ] && cp main.py "../../../build_outputs/${week_name}_python.py"
-                  ;;
-              esac
+          cd week6
 
-              cd - > /dev/null
-            done
+          for pattern in */; do
+            cd "$pattern"
+            pattern_name=$(basename "$pattern")
+            echo "🔧 Building $pattern_name..."
+
+            # C++: *.cpp + Makefile
+            if [ -f "${pattern_name}.cpp" ]; then
+              echo "⚙️ Building C++ for $pattern_name"
+              g++ -o "${pattern_name}_cpp" "${pattern_name}.cpp"
+              [ -f "${pattern_name}_cpp" ] && cp "${pattern_name}_cpp" ../../build_outputs/
+            fi
+
+            # Rust: <Pattern>_Rust/Cargo.toml
+            if [ -d "${pattern_name}_Rust" ]; then
+              echo "⚙️ Building Rust for $pattern_name"
+              cd "${pattern_name}_Rust"
+              cargo build --release
+              exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
+              [ -n "$exe" ] && cp "$exe" ../../build_outputs/"${pattern_name}_rust"
+              cd ..
+            fi
+
+            # Kotlin: *.jar
+            if [ -f "${pattern_name}.jar" ]; then
+              echo "📦 Copying Kotlin JAR for $pattern_name"
+              cp "${pattern_name}.jar" ../../build_outputs/
+            fi
+
+            # C#: <Pattern>App/*.csproj
+            if [ -d "${pattern_name}App" ]; then
+              echo "⚙️ Building C# for $pattern_name"
+              dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output
+              cp -r publish_output "../../build_outputs/${pattern_name}_csharp"
+            fi
+
+            # Python: *.py
+            if [ -f "main.py" ]; then
+              echo "🐍 Copying Python for $pattern_name"
+              cp main.py ../../build_outputs/"${pattern_name}_python.py"
+            fi
+
+            cd ..
           done
 
       - name: Create ZIP Archive
