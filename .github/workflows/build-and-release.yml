@@ -11,9 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      # 환경 설정
+      - name: Set up Environments
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
@@ -27,16 +32,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: Install build-essential
+        run: sudo apt-get update && sudo apt-get install -y build-essential zip
 
-      - name: Install dependencies (C++, zip)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential zip
-
-      # 프로젝트 빌드
       - name: Build All Projects
         run: |
           mkdir -p build_outputs
@@ -44,50 +42,45 @@ jobs:
             week_name=$(basename "$week")
             for lang in "$week"*/; do
               lang_name=$(basename "$lang")
+              echo "🛠️ Processing $week_name/$lang_name..."
+              cd "$lang"
+              
               case "$lang_name" in
                 cpp)
-                  cd "$lang"
-                  [ -f Makefile ] && make && cp your_cpp_executable "../../build_outputs/${week_name}_cpp"
-                  cd - > /dev/null
+                  [ -f Makefile ] && make
+                  exe=$(find . -maxdepth 1 -type f -executable | head -n1)
+                  [ -n "$exe" ] && cp "$exe" "../../../build_outputs/${week_name}_cpp"
                   ;;
                 rust)
-                  cd "$lang"
-                  [ -f Cargo.toml ] && cargo build --release && cp target/release/your_rust_executable "../../build_outputs/${week_name}_rust"
-                  cd - > /dev/null
+                  [ -f Cargo.toml ] && cargo build --release
+                  exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
+                  [ -n "$exe" ] && cp "$exe" "../../../build_outputs/${week_name}_rust"
                   ;;
                 csharp)
-                  cd "$lang"
-                  csproj=$(ls *.csproj | head -n1)
-                  [ -n "$csproj" ] && dotnet publish -c Release -o publish_output && cp -r publish_output "../../build_outputs/${week_name}_csharp"
-                  cd - > /dev/null
+                  csproj=$(find . -name "*.csproj" | head -n1)
+                  if [ -n "$csproj" ]; then
+                    dotnet publish "$csproj" -c Release -o publish_output
+                    cp -r publish_output "../../../build_outputs/${week_name}_csharp"
+                  fi
                   ;;
                 kotlin)
-                  cd "$lang"
-                  [ -f build.gradle.kts ] && ./gradlew clean build installDist && cp -r build/install "../../build_outputs/${week_name}_kotlin"
-                  cd - > /dev/null
+                  [ -f build.gradle.kts ] && ./gradlew installDist
+                  [ -d build/install ] && cp -r build/install "../../../build_outputs/${week_name}_kotlin"
                   ;;
                 python)
-                  cd "$lang"
-                  if [ -f requirements.txt ]; then
-                    python -m venv venv
-                    source venv/bin/activate
-                    pip install -r requirements.txt
-                    deactivate
-                  fi
-                  cp -r . "../../build_outputs/${week_name}_python"
-                  cd - > /dev/null
+                  [ -f main.py ] && cp main.py "../../../build_outputs/${week_name}_python.py"
                   ;;
               esac
+
+              cd - > /dev/null
             done
           done
 
-      # 결과물 압축
       - name: Create ZIP Archive
         run: |
           cd build_outputs
           zip -r ../release_artifacts.zip .
 
-      # GitHub 릴리즈 생성
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/heads/main')
