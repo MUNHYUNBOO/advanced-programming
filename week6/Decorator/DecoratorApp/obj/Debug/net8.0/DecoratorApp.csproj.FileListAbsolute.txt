@@ -1,0 +1,15 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/bin/Debug/net8.0/DecoratorApp
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/bin/Debug/net8.0/DecoratorApp.deps.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/bin/Debug/net8.0/DecoratorApp.runtimeconfig.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/bin/Debug/net8.0/DecoratorApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/bin/Debug/net8.0/DecoratorApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.GeneratedMSBuildEditorConfig.editorconfig
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.AssemblyInfoInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.AssemblyInfo.cs
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.csproj.CoreCompileInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.sourcelink.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/refint/DecoratorApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/DecoratorApp.genruntimeconfig.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/DecoratorApp/obj/Debug/net8.0/ref/DecoratorApp.dll
