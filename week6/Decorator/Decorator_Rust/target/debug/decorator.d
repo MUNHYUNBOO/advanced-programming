@@ -1,0 +1,1 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/Decorator_Rust/target/debug/decorator: /bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Decorator/Decorator_Rust/src/main.rs
