@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write  # ✅ GitHub Release를 만들기 위한 권한 부여
+  contents: write  # ✅ Release 만들기 위한 권한 부여
 
 jobs:
   build-release:
@@ -38,74 +38,63 @@ jobs:
       - name: Install build tools
         run: sudo apt-get update && sudo apt-get install -y build-essential zip
 
-      - name: Build All Week Patterns
+      - name: Build All week6 Patterns
         run: |
-          if [ -f build_outputs ]; then
-            echo "⚠️ Removing accidentally created build_outputs file"
-            rm build_outputs
-          fi
           mkdir -p build_outputs
+          cd week6
 
-          for week in week*/; do
-            echo "📁 Entering $week"
-            cd "$week"
+          for pattern in */; do
+            cd "$pattern"
+            pattern_name=$(basename "$pattern")
+            echo "🔧 Building $pattern_name..."
 
-            for pattern in */; do
-              cd "$pattern"
-              pattern_name=$(basename "$pattern")
-              echo "🔧 Building $pattern_name in $week..."
+            # 💻 C++ (main.cpp)
+            if [ -f "${pattern_name}.cpp" ]; then
+              echo "⚙️ Building C++ for $pattern_name"
+              g++ -o "${pattern_name}_cpp" "${pattern_name}.cpp" 2>/dev/null || echo "❌ C++ build failed"
+              [ -f "${pattern_name}_cpp" ] && cp "${pattern_name}_cpp" ../../build_outputs/
+            fi
 
-              # 💻 C++ (*.cpp)
-              cpp_file=$(find . -maxdepth 1 -name "*.cpp" | head -n1)
-              if [ -n "$cpp_file" ]; then
-                echo "⚙️ Building C++ for $pattern_name ($cpp_file)"
-                exe_name="${pattern_name}_cpp"
-                g++ -o "$exe_name" "$cpp_file" 2>/dev/null || echo "❌ C++ build failed"
-                [ -f "$exe_name" ] && cp "$exe_name" ../../../build_outputs/
+            # 🦀 Rust (<pattern>_Rust/Cargo.toml)
+            if [ -d "${pattern_name}_Rust" ]; then
+              echo "⚙️ Building Rust for $pattern_name"
+              cd "${pattern_name}_Rust"
+              cargo build --release || echo "❌ Rust build failed for $pattern_name"
+              exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
+              echo "Rust executable: $exe"
+              if [ -n "$exe" ]; then
+                mkdir -p ../../build_outputs
+                cp "$exe" ../../build_outputs/"${pattern_name}_rust"
+              else
+                echo "❌ No Rust executable found for $pattern_name"
               fi
-
-              # 🦀 Rust (<pattern>_Rust/Cargo.toml)
-              if [ -d "${pattern_name}_Rust" ]; then
-                echo "⚙️ Building Rust for $pattern_name"
-                cd "${pattern_name}_Rust"
-                cargo build --release || echo "❌ Rust build failed for $pattern_name"
-                exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
-                echo "Rust executable: $exe"
-                if [ -n "$exe" ]; then
-                  mkdir -p ../../../build_outputs
-                  cp "$exe" ../../../build_outputs/"${pattern_name}_rust"
-                else
-                  echo "❌ No Rust executable found for $pattern_name"
-                fi
-                cd ..
-              fi
-
-              # ☕ Kotlin (JAR 파일)
-              if [ -f "${pattern_name}.jar" ]; then
-                echo "📦 Copying Kotlin JAR for $pattern_name"
-                cp "${pattern_name}.jar" ../../../build_outputs/
-              fi
-
-              # 🧩 C# (.csproj in <pattern_name>App/)
-              if [ -d "${pattern_name}App" ]; then
-                echo "⚙️ Building C# for $pattern_name"
-                dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output || echo "❌ C# build failed"
-                if [ -d publish_output ]; then
-                  mkdir -p ../../../build_outputs
-                  cp -r publish_output "../../../build_outputs/${pattern_name}_csharp"
-                fi
-              fi
-
-              # 🐍 Python (*.py)
-              py_file=$(find . -maxdepth 1 -name "*.py" | head -n1)
-              if [ -n "$py_file" ]; then
-                echo "🐍 Copying Python ($py_file) for $pattern_name"
-                mkdir -p ../../../build_outputs
-                cp "$py_file" ../../../build_outputs/"${pattern_name}_python.py"
-              fi
-
               cd ..
-            done
+            fi
+
+            # ☕ Kotlin (JAR 파일)
+            if [ -f "${pattern_name}.jar" ]; then
+              echo "📦 Copying Kotlin JAR for $pattern_name"
+              cp "${pattern_name}.jar" ../../build_outputs/
+            fi
+
+            # 🧩 C# (.csproj in <pattern_name>App/)
+            if [ -d "${pattern_name}App" ]; then
+              echo "⚙️ Building C# for $pattern_name"
+              dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output || echo "❌ C# build failed"
+              if [ -d publish_output ]; then
+                mkdir -p ../../build_outputs
+                cp -r publish_output "../../build_outputs/${pattern_name}_csharp"
+              fi
+            fi
+
+            # 🐍 Python (*.py)
+            py_file=$(find . -maxdepth 1 -name "*.py" | head -n1)
+            if [ -n "$py_file" ]; then
+              echo "🐍 Copying Python ($py_file) for $pattern_name"
+              mkdir -p ../../build_outputs
+              cp "$py_file" ../../build_outputs/"${pattern_name}_python.py"
+            fi
+
 
             cd ..
           done
