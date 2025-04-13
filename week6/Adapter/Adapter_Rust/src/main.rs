@@ -1,39 +1,106 @@
-trait UserProvider {
-    fn fetch(&self) -> String;
-}
+name: Build and Release
 
-struct Internal;
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
-impl UserProvider for Internal {
-    fn fetch(&self) -> String {
-        "get user info (from Internal)".to_string()
-    }
-}
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
 
-struct External;
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-impl External {
-    fn search(&self) -> String {
-        "get user info (from External)".to_string()
-    }
-}
+      - name: Set up Environments
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-// 어댑터 구조체
-struct Adapter<'a> {
-    external: &'a External,
-}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-impl<'a> UserProvider for Adapter<'a> {
-    fn fetch(&self) -> String {
-        self.external.search()
-    }
-}
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
 
-fn main() {
-    let internal = Internal;
-    println!("Internal: {}", internal.fetch());
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    let external = External;
-    let adapter = Adapter { external: &external };
-    println!("External through Adapter: {}", adapter.fetch());
-}
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential zip
+
+      - name: Build All week6 Patterns
+        run: |
+          mkdir -p build_outputs
+          cd week6
+
+          for pattern in */; do
+            cd "$pattern"
+            pattern_name=$(basename "$pattern")
+            echo "🔧 Building $pattern_name..."
+
+            # 💻 C++ (main.cpp)
+            if [ -f "${pattern_name}.cpp" ]; then
+              echo "⚙️ Building C++ for $pattern_name"
+              g++ -o "${pattern_name}_cpp" "${pattern_name}.cpp" 2>/dev/null || echo "❌ C++ build failed"
+              [ -f "${pattern_name}_cpp" ] && cp "${pattern_name}_cpp" ../../build_outputs/
+            fi
+
+            # 🦀 Rust (<pattern>_Rust/Cargo.toml)
+            if [ -d "${pattern_name}_Rust" ]; then
+              echo "⚙️ Building Rust for $pattern_name"
+              cd "${pattern_name}_Rust"
+              cargo build --release || echo "❌ Rust build failed for $pattern_name"
+              exe=$(find target/release -maxdepth 1 -type f -executable | head -n1)
+              if [ -n "$exe" ]; then
+                cp "$exe" ../../build_outputs/"${pattern_name}_rust"
+              else
+                echo "❌ No Rust executable found for $pattern_name"
+              fi
+              cd ..
+            fi
+
+            # ☕ Kotlin (JAR 파일)
+            if [ -f "${pattern_name}.jar" ]; then
+              echo "📦 Copying Kotlin JAR for $pattern_name"
+              cp "${pattern_name}.jar" ../../build_outputs/
+            fi
+
+            # 🧩 C# (.csproj in <pattern_name>App/)
+            if [ -d "${pattern_name}App" ]; then
+              echo "⚙️ Building C# for $pattern_name"
+              dotnet publish "${pattern_name}App/${pattern_name}App.csproj" -c Release -o publish_output || echo "❌ C# build failed"
+              if [ -d publish_output ]; then
+                cp -r publish_output "../../build_outputs/${pattern_name}_csharp"
+              fi
+            fi
+
+            # 🐍 Python (main.py)
+            if [ -f "main.py" ]; then
+              echo "🐍 Copying Python for $pattern_name"
+              cp main.py ../../build_outputs/"${pattern_name}_python.py"
+            fi
+
+            cd ..
+          done
+
+      - name: Create ZIP Archive
+        run: |
+          cd build_outputs
+          zip -r ../release_artifacts.zip .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/heads/main')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ github.run_number }}
+          name: Release ${{ github.run_number }}
+          files: release_artifacts.zip
