@@ -1,0 +1,15 @@
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/bin/Debug/net8.0/AdapterApp
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/bin/Debug/net8.0/AdapterApp.deps.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/bin/Debug/net8.0/AdapterApp.runtimeconfig.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/bin/Debug/net8.0/AdapterApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/bin/Debug/net8.0/AdapterApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.GeneratedMSBuildEditorConfig.editorconfig
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.AssemblyInfoInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.AssemblyInfo.cs
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.csproj.CoreCompileInputs.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.sourcelink.json
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/refint/AdapterApp.dll
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.pdb
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/AdapterApp.genruntimeconfig.cache
+/bce/lectures/2025-advanced-programming/202255646/advanced-programming/week6/Adapter/AdapterApp/obj/Debug/net8.0/ref/AdapterApp.dll
