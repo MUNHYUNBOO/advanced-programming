@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write  # ✅ GitHub Release 생성 권한 부여
+  contents: write  # ✅ GitHub Release를 만들기 위한 권한 부여
 
 jobs:
   build-release:
@@ -40,6 +40,10 @@ jobs:
 
       - name: Build All Week Patterns
         run: |
+          if [ -f build_outputs ]; then
+            echo "⚠️ Removing accidentally created build_outputs file"
+            rm build_outputs
+          fi
           mkdir -p build_outputs
 
           for week in week*/; do
